@@ -1,8 +1,11 @@
 from fastapi import FastAPI
 from enum import Enum
 from pydantic import BaseModel
+from user import router as user_router
 
 app = FastAPI()
+app.include_router(user_router)
+
 class ModelName(str, Enum):
     alexnet = "alexnet"
     resnet = "resnet"
