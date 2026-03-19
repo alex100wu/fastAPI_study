@@ -1,24 +1,27 @@
-from fastapi import FastAPI
 from enum import Enum
+
+from fastapi import FastAPI
 from pydantic import BaseModel
 from user import router as user_router
 
 app = FastAPI()
 app.include_router(user_router)
 
+
 class ModelName(str, Enum):
     alexnet = "alexnet"
     resnet = "resnet"
     lenet = "lenet"
 
+
 @app.get("/")
 async def root():
-    return {"key":"hello world"}
+    return {"key": "hello world"}
+
 
 @app.get("/items/{item_id}")
-async def read_item(item_id:int):
-    return {"id":item_id}
-
+async def read_item(item_id: int):
+    return {"id": item_id}
 
 
 @app.get("/models/{model_name}")
@@ -32,8 +35,10 @@ async def get_model(model_name: ModelName):
 
 
 fake_items_db = [{"item_name": "Foo"}, {"item_name": "Bar"}, {"item_name": "Baz"}]
+
+
 @app.get("/items/")
-async def read_item(skip: int = 0, limit: int = 10):
+async def read_items(skip: int = 0, limit: int = 10):
     return fake_items_db[skip : skip + limit]
 
 
